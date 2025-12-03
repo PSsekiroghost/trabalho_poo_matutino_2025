@@ -1,0 +1,48 @@
+Banco de reservas de viagem:
+
+create database sistema_viagens;
+
+use sistema_viagens;
+
+create table empresa(
+id_empresa int primary key,
+nome varchar(45),
+tipo varchar(45),
+contato int
+);
+
+create table destino(
+id_destino int primary key,
+pais varchar(45),
+estado varchar(45),
+cidade varchar(45)
+);
+
+create table viagem(
+id_viagem int primary key,
+data DATE,
+hora time,
+empresa_id_empresa int,
+destino_id_destino int,
+foreign key(empresa_id_empresa) references empresa(id_empresa),
+foreign key(destino_id_destino) references destino(id_destino)
+);
+
+create table passageiro(
+id_passageiro int primary key,
+nome varchar(45),
+data_nascimento date,
+email varchar(45),
+telefone varchar(45)
+); 
+
+create table reserva(
+id_reserva int primary key,
+data_reserva date,
+status TINYINT,
+meio_pagamento varchar(45),
+viagem_id_viagem int,
+passageiro_id_passageiro int,
+foreign key(viagem_id_viagem) references viagem(id_viagem),
+foreign key(passageiro_id_passageiro) references passageiro(id_passageiro)
+);
