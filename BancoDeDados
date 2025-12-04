@@ -4,45 +4,47 @@ create database sistema_viagens;
 
 use sistema_viagens;
 
-create table empresa(
-id_empresa int primary key,
-nome varchar(45),
-tipo varchar(45),
-contato int
+CREATE TABLE empresa (
+    id_empresa INT PRIMARY KEY AUTO_INCREMENT, 
+    nome VARCHAR(45),
+    tipo VARCHAR(45),
+    contato INT 
 );
 
-create table destino(
-id_destino int primary key,
-pais varchar(45),
-estado varchar(45),
-cidade varchar(45)
+CREATE TABLE destino (
+    id_destino INT PRIMARY KEY AUTO_INCREMENT,
+    pais VARCHAR(45),
+    estado VARCHAR(45),
+    cidade VARCHAR(45)
 );
 
-create table viagem(
-id_viagem int primary key,
-data DATE,
-hora time,
-empresa_id_empresa int,
-destino_id_destino int,
-foreign key(empresa_id_empresa) references empresa(id_empresa),
-foreign key(destino_id_destino) references destino(id_destino)
+CREATE TABLE passageiro (
+    id_passageiro INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    data_nascimento DATE,
+    email VARCHAR(45),
+    telefone VARCHAR(45)
 );
 
-create table passageiro(
-id_passageiro int primary key,
-nome varchar(45),
-data_nascimento date,
-email varchar(45),
-telefone varchar(45)
-); 
+CREATE TABLE viagem (
+    id_viagem INT PRIMARY KEY AUTO_INCREMENT,
+    data DATE,
+    hora TIME,
+    empresa_id_empresa INT,
+    destino_id_destino INT,
+    -- Configuração das Chaves Estrangeiras
+    FOREIGN KEY (empresa_id_empresa) REFERENCES empresa(id_empresa),
+    FOREIGN KEY (destino_id_destino) REFERENCES destino(id_destino)
+);
 
-create table reserva(
-id_reserva int primary key,
-data_reserva date,
-status TINYINT,
-meio_pagamento varchar(45),
-viagem_id_viagem int,
-passageiro_id_passageiro int,
-foreign key(viagem_id_viagem) references viagem(id_viagem),
-foreign key(passageiro_id_passageiro) references passageiro(id_passageiro)
+CREATE TABLE reserva (
+    id_reserva INT PRIMARY KEY AUTO_INCREMENT,
+    data_reserva DATE,
+    status TINYINT, -- Lembra: 1 para Confirmado, 0 para Pendente
+    meio_pagamento VARCHAR(45),
+    viagem_id_viagem INT,
+    passageiro_id_passageiro INT,
+    -- Configuração das Chaves Estrangeiras
+    FOREIGN KEY (viagem_id_viagem) REFERENCES viagem(id_viagem),
+    FOREIGN KEY (passageiro_id_passageiro) REFERENCES passageiro(id_passageiro)
 );
